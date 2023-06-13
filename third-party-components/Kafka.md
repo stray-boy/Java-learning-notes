@@ -8,12 +8,26 @@ kafka遇到的坑，在v2.12是一个分界线，新老版本命令不一致，�
 ```
 # 安装过程
 ```
-
+1、下载文件并解压
+tar -zxvf kafka_2.12-1.1.1.tgz
+2、移动文件到指定目录
+mv kafka_2.12-1.1.1 ../software/
+3、修改server.properties配置文件
+listeners=PLAINTEXT://localhost:9092
+advertised.listeners=PLAINTEXT://your.server.name:9092
+log.dirs=/opt/module/kafka_2.12/logs
 ```
 # kafka启动命令
+```
+1、直接启动
+bin/kafka-server-start.sh config/server.properties
+2、后台启动
 bin/kafka-server-start.sh -daemon config/server.properties
+3、JPS查看kafka进程是否运行正常
+24025 Kafka
 查看当前服务器所有的toptic
 bin/kafka-topics.sh --zookeeper IP:2181 --list
+```
 # 创建topic
 ```
 bin/kafka-topics.sh --create --topic mykafka --replication-factor 1 --partitions 1 --zookeeper localhost:2181
