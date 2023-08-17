@@ -8,89 +8,70 @@ Nacos是一个功能强大、易于使用且广泛适用于微服务架构中的
 ```
 # 注意事项
 ```
-
+注意对应的版本信息适配信息
 ```
 # 安装过程
 ```
+Windows下安装：
+下载：https://github.com/alibaba/nacos/releases/download/2.1.1/nacos-server-2.1.1.zip
+解压
+修改配置文件
+
+# 配置mysql数据库
+### Count of DB:
+db.num=1
+
+### Connect URL of DB:  测试环境数据库
+db.url.0=jdbc:mysql://10.31.2.2:23306/nacos?characterEncoding=utf8&connectTimeout=1000&socketTimeout=3000&autoReconnect=true&useUnicode=true&useSSL=false&serverTimezone=UTC
+db.user.0=root
+db.password.0=Maywide_123
+
+### Connection pool configuration: hikariCP
+db.pool.config.connectionTimeout=30000
+db.pool.config.validationTimeout=10000
+db.pool.config.maximumPoolSize=20
+db.pool.config.minimumIdle=2
+
+开启鉴权
+### If turn on auth system:
+nacos.core.auth.system.type=nacos
+nacos.core.auth.enabled=true
+
+
+Linux下安装
+下载：https://github.com/alibaba/nacos/releases/download/2.1.1/nacos-server-2.1.1.tar.gz
+解压
+修改配置文件
 
 
 ```
-# kafka启动命令
+# Nacos启动命令
 ```
+Windows下启动：
+单机启动：startup.cmd -m standalone
+集群启动：startup.cmd
 
+Linux下启动：
 
-```
-# 创建topic
-```
-
-
-```
-# 查看数据
-```
 
 
 ```
-# 查看toptic信息
+# 访问地址
 ```
+访问地址：http://localhost:8848/nacos
 
 
-```
-# 查看toptic从开始接收的消息
-```
-bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic myTopic --from-beginning
-```
-# 删除topic
-```
-bin/kafka-topics.sh --zookeeper localhost:2181 --delete --topic mykafka
-```
-# 向topic发送消息
-```
-bin/kafka-console-producer.sh --brokerlist IP:9092 --topic first
 ```
 
 # 面试题
-1、对Kafka的核心概念有哪些了解？如生产者、消费者、代理等。可以分别介绍一下它们的作用和原理吗？
+
 ```
-好的，让我来介绍一下Kafka的核心概念：
 
-1. 生产者（Producer）：负责生产消息并将其发送到Kafka集群。生产者将消息发送到指定主题（Topic）的指定分区（Partition）。
-
-2. 消费者（Consumer）：消费者从Kafka集群订阅并消费主题中的消息。消费者可以以不同的方式订阅主题，如按消息顺序、按时间、按键值等。
-
-3. 代理（Broker）：即Kafka集群中的服务器节点。代理负责存储和管理主题的消息，以及处理生产者和消费者的请求。每个代理都是一个独立的进程，可以运行在单独的机器上或者在同一台机器上的不同端口上。
-
-除此之外，Kafka还有其他一些重要的概念，如主题（Topic）、分区（Partition）、偏移量（Offset）和消费者组（Consumer Group）等。这些概念都是Kafka提供的核心机制，对于理解和使用Kafka非常重要。
-```
-2、您在之前的工作中使用过Kafka吗？如果使用过，能否介绍一下您使用Kafka的场景和具体实现？
-```
-Kafka被广泛应用于大数据场景中的消息队列、日志收集和分析等方面。以下是一些常见的场景和实现方式：
-
-1. 消息队列：Kafka可以作为一种高性能、高吞吐量的消息队列，用于在分布式系统中传递和处理大量消息。与传统的消息队列相比，Kafka具有更高的可靠性和可扩展性。
-
-2. 日志收集：Kafka可以用于收集和分析日志数据，如应用程序日志、系统日志等。通过将日志数据写入Kafka，可以实现高效的日志收集和处理，并支持实时分析和查询。
-
-3. 流处理：Kafka可以与流处理框架（如Apache Flink、Spark Streaming等）结合使用，用于实现实时数据处理和分析。通过将数据写入Kafka，可以将其转换为流数据，并使用流处理框架进行实时处理和分析。
-
-具体实现方式取决于具体的场景和需求，可以使用Kafka提供的Java、Scala等客户端API进行开发，或者使用Kafka Connect等工具进行配置和部署。同时，还可以使用Kafka的生态系统中的其他组件和工具，如ZooKeeper、Kafka Manager等，来简化和增强Kafka的功能。
-```
-3、您对于Kafka的消息保证有哪些了解？Kafka提供了哪些消息保证机制？请分别介绍一下它们的作用和使用场景。
-```
-好的，让我来介绍一下Kafka的消息保证机制：
-
-1. At most once：最多一次，即生产者发送的消息有可能会丢失，但不会重复发送。这种消息保证机制对于一些对消息准确性要求不高，但对消息时效性要求较高的场景适用。
-
-2. At least once：至少一次，即生产者发送的消息必须被消费者至少消费一次，但有可能会重复消费。这种消息保证机制对于一些对消息准确性要求较高，但对消息时效性要求不高的场景适用。
-
-3. Exactly once：恰好一次，即生产者发送的消息必须且只能被消费者消费一次。这种消息保证机制对于一些对消息准确性要求较高，但对消息时效性要求也很高的场景适用。
-
-Kafka提供了多种消息保证机制的实现方式，如单播（Unicast）、多播（Multicast）和广播（Broadcast）等。其中，单播和多播适用于At least once和At most once这两种消息保证机制，而广播适用于Exactly once这种消息保证机制。此外，Kafka还提供了事务（Transaction）机制，用于确保在生产者和消费者之间的消息传输过程中可以保证Exactly once的消息传输。
 ```
 
 # 个人心得
 ```
-使用Kafka拥有多个使用场景，在我遇到的场景中一般会有消费生产与MQ消息中间件做比较。还有一些其他的应用场景，例如进行日志的收集，对于消息的永久存放，做一些flink或者logstash的消息转发，能够有效的减少系统收集的时间，可以通过Kafka将数据分配到应有的地方。
-对于kafka拥有高效的保存效率以及优秀的分区，可以进行快速的查询，我所知的有些做时间线数据库的就是以kafka作为数据源，通过kafka从前向后的保存特性来实现时间的保存。
-使用较少，也是在学习日志处理和实时计算的时候对kafka略有了解，做个记录，有时间再做更新，有更多心得的也欢迎补充。
+Nacos配置简单，可视化界面易于使用，有完整的生态，充足的文档，学习成本低，应用效率高。
 ```
 
 # 优秀项目展示
