@@ -79,7 +79,7 @@ vm.max_map_count=262144
 sudo sysctl -p
 11、然后再进入到用户elk启动就可以了
 12、后台启动
-nohup bin/elasticsearch  
+nohup bin/elasticsearch &
 13、启动后打开出现节点信息
 http://192.168.5.104:9200
 14、启动密码、设置配置文件

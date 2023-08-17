@@ -28,10 +28,25 @@ mv kibana-6.8.1-linux-x86_64/ kibana-6.8.1
 chown -R elk:elk kibana-6.8.1
 5、修改配置文件啊
 
+修改配置文件（汉化） kibana5.* 6.*以后才能够使用
+修改config/kibana.yml
+i18n.locale: "zh-CN"
+之前的可以使用汉化包
+https://github.com/anbai-inc/Kibana_Hanization
+
+基础配置
+server.port: 5601
+server.host: "0.0.0.0"
+server.name: "xj-log-kibana"
+elasticsearch.hosts: ["http://kibana:xjpasswordelk@localhost:9200"]
+kibana.index: ".kibana"
+elasticsearch.username: "kibana"
+elasticsearch.password: "xjpasswordelk"
+
+
 6、启动
-
-
-7、查看端口号
+nohup bin/kibana &
+7、查看端口号及进程
 sudo ss -nlp | grep :5601
 
 
