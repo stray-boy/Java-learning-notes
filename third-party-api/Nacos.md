@@ -37,6 +37,8 @@ db.pool.config.minimumIdle=2
 nacos.core.auth.system.type=nacos
 nacos.core.auth.enabled=true
 
+数据库执行SQL文件
+
 
 Linux下安装
 下载：https://github.com/alibaba/nacos/releases/download/2.1.1/nacos-server-2.1.1.tar.gz
@@ -62,6 +64,8 @@ Linux下启动：
 
 
 ```
+整合到Spring
+
 
 # 面试题
 
